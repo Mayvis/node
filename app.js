@@ -5,13 +5,16 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-const adminRoutes = require('./routes/admin');
+app.set('view engine', 'pug'); // choose pug engine
+app.set('views', 'views'); // choose html folder
+
+const adminData = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
 app.use(bodyParser.urlencoded({extends: false}));
 app.use(express.static(path.join(__dirname, 'public'))); // css file to be static
 
-app.use('/admin', adminRoutes); // Only route which begin with /admin will trigger adminRoutes.
+app.use('/admin', adminData.routes); // Only route which begin with /admin will trigger adminRoutes.
 app.use(shopRoutes);
 
 app.use((req, res, next) => {
